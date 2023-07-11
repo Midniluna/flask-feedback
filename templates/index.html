@@ -13,7 +13,25 @@
 		<link rel="stylesheet" href="static/style.css" />
 	</head>
 	<body>
-		{% block content %}{% endblock %}
+		<nav class="navbar navbar-dark bg-dark">
+			<div class="container flex-row-reverse">
+				<ul class="nav navbar-nav flex-row float-right">
+					{% if 'user_id' in session %}
+					<li class="nav-item">
+						<a class="nav-link" href="/logout">Logout</a>
+					</li>
+					{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="/login">Login</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/register">Register</a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+		</nav>
+		<section class="content">{% block content %}{% endblock %}</section>
 	</body>
 	<script
 		src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -1,3 +1,16 @@
 body {
 	background-color: antiquewhite;
 }
+
+form {
+	max-width: 75%;
+	min-width: 300px;
+}
+
+.content {
+	padding: 20px;
+}
+
+.nav-item {
+	padding-left: 15px;
+}
