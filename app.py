@@ -97,11 +97,6 @@ def view_secrets(username):
         return redirect('/login')
     
     user = User.query.filter_by(username="Barksley123").first()
-    print(
-        f"""------------------------------
-        {user}
-        --------------------------------"""
-    )
     return render_template('secret.html', user=user)
 
 # Barksley123 woofwoof
