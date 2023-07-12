@@ -10,13 +10,17 @@
 			integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 			crossorigin="anonymous"
 		/>
-		<link rel="stylesheet" href="static/style.css" />
+		<link
+			type="text/css"
+			rel="stylesheet"
+			href="{{ url_for('static', filename='/style.css') }}"
+		/>
 	</head>
 	<body>
 		<nav class="navbar navbar-dark bg-dark">
 			<div class="container flex-row-reverse">
 				<ul class="nav navbar-nav flex-row float-right">
-					{% if 'user_id' in session %}
+					{% if 'username' in session %}
 					<li class="nav-item">
 						<a class="nav-link" href="/logout">Logout</a>
 					</li>
@@ -48,5 +52,5 @@
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"
 	></script>
-	<script src="static/app.js"></script>
+	<script src="{{ url_for('static', filename='app.js') }}"></script>
 </html>
