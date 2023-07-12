@@ -14,3 +14,8 @@ form {
 .nav-item {
 	padding-left: 15px;
 }
+
+.edit,
+.delete {
+	cursor: pointer;
+}

@@ -3,8 +3,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 from IPython import embed
 
-from models import db, connect_db, get_database_uri, get_echo_TorF, User
-from forms import RegisterUserForm, LoginUserForm
+from models import db, connect_db, get_database_uri, get_echo_TorF, User, Feedback
+from forms import RegisterUserForm, LoginUserForm, FeedbackForm
 
 app = Flask(__name__)
 
@@ -55,7 +55,6 @@ def register_user():
             form.username.errors.append('Username or email taken.  Please pick another')
             return render_template('register.html', form=form)
         session['username'] = new_user.username
-        session['user_id'] = new_user.id
         flash("Welcome! Successfully Created Your Account!", "success")
         return redirect(f"/users/{session['username']}")
 
@@ -87,16 +86,57 @@ def login_user():
 @app.route('/logout')
 def logout_user():
     session.pop('username')
-    session.pop('user_id')
     flash("Goodbye!", "info")
     return redirect('/login')
 
 @app.route('/users/<username>')
-def view_secrets(username):
+def view_userpage(username):
     if "username" not in session or username != session['username']:
         return redirect('/login')
     
-    user = User.query.filter_by(username="Barksley123").first()
-    return render_template('secret.html', user=user)
+    user = User.query.filter_by(username=username).first()
+    feedback = Feedback.query.all()
+    return render_template('secret.html', user=user, feedback=feedback)
+
+@app.route('/users/<username>/delete')
+def delete_user(username):
+    if "username" not in session or username != session['username']:
+        return redirect('/login')
+    
+    User.query.filter_by(username=username).first().delete()
+    session.pop('username')
+    return redirect('/login')
+
+
+# ------- FEEDBACK ROUTES ---------
+
+
+@app.route('/feedback/<feedback_id>/update', methods=["GET", "POST"])
+def update_feedback(feedback_id):
+    
+    post = Feedback.query.get(feedback_id)
+    username = post.user.username
+
+    if "username" not in session:
+        return redirect('/login')
+    elif username != session['username']:
+        return redirect(f'/users/{username}')
+    
+    form = FeedbackForm(obj=post)
+    
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        db.session.commit()
+        return redirect(f'/users/{username}')
+
+    return render_template('edit-post.html', form=form)
+
+@app.route('/feedback/<feedback_id>/delete', methods=["POST"])
+def delete_feedback(feedback_id):
+    post = Feedback.query.get(feedback_id)
+    db.session.delete(post)
+    db.session.commit()
+    return "Deleted!"
 
 # Barksley123 woofwoof
