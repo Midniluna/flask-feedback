@@ -14,7 +14,17 @@ user = User.register(
     last_name = "Woofinton"
 )
 
-db.session.add(user)
+user2 = User.register(
+    username = "4N0N",
+    pwd = "sosecretwowo",
+    email = "anon.ymous@email.com",
+    first_name = "Mystery",
+    last_name = "Mann"
+)
+
+
+
+db.session.add_all([user, user2])
 db.session.commit()
 
     # title content username
@@ -35,5 +45,17 @@ post3 = Feedback(
     username = "Barksley123"
 )
 
-db.session.add_all([post1, post2, post3])
+
+post4 = Feedback(
+    title = "Title title",
+    content = "There is content to be had here. Too bad it's secret, only I can see this!",
+    username = "4N0N"
+)
+post5 = Feedback(
+    title = "I am not a ninja",
+    content = "Believe me you'd know a ninja if you saw one. Surely. Oh this katana? It's my great great.... great grandpa's. Twice removed.",
+    username = "4N0N"
+)
+
+db.session.add_all([post1, post2, post3, post4, post5])
 db.session.commit()

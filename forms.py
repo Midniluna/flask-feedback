@@ -17,4 +17,4 @@ class LoginUserForm(FlaskForm):
 
 class FeedbackForm(FlaskForm):
     title = StringField("Title", validators=[InputRequired()])
-    content = TextAreaField("Title", validators=[InputRequired()])
+    content = TextAreaField("Content", validators=[InputRequired()])

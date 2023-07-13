@@ -1,0 +1,9 @@
+{% extends 'index.html' %}{% block title %}Submit Feedback{% endblock %} {%
+block content %}
+
+<h1>Submit Feedback</h1>
+
+{% include 'basic-form.html' %}
+<br />
+<a href="/users/{{user.username}}">Go back</a>
+{% endblock %}
